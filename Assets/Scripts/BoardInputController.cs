@@ -5,14 +5,12 @@ using UnityEngine;
 public class BoardInputController : NinjaMonoBehaviour {
     public SudokuBoard sudokuBoard;
     private SudokuCell selectedCell;
-    private List<SudokuCell> emptyCells;
     private void Awake() {
         SudokuBoard.OnBoardInitialized -= RegisterSudokuCells;
         SudokuBoard.OnBoardInitialized += RegisterSudokuCells;
     }
     private void RegisterSudokuCells() {
         string logId = "RegisterSudokuCells";
-        emptyCells = sudokuBoard.EmptyCells;
         List<SudokuCell> sudokuCells = sudokuBoard.AllCells;
         var sudokuCellsCount = sudokuCells.Count;
         logd(logId,"Registering "+sudokuCellsCount+" Sudoku Cells");
@@ -30,10 +28,13 @@ public class BoardInputController : NinjaMonoBehaviour {
         }
         if(selectedCell==cell) {
             logd(logId, "Tried to select same Cell="+cell.logf()+" => Clearing selection");
+            selectedCell?.Deselect();
             selectedCell = null;
         } else {
             logd(logId, "Selected Cell="+cell.logf());
+            selectedCell?.Deselect();
             selectedCell = cell;
+            selectedCell.Select();
         }
     }
     public void OnInputButtonClick(int number) {

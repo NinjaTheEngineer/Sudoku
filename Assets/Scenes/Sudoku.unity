@@ -492,7 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfGrids: 9
-  gridPrefab: {fileID: 7185225694683030996, guid: 4cdfdd0847d15504faeaaaafcef56ac3, type: 3}
+  gridPrefab: {fileID: 7188599721631764111, guid: 11a9c9590848eeb48b96806838cc5581, type: 3}
   grids:
   - {fileID: 0}
   - {fileID: 0}
@@ -503,7 +503,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  difficultyLevel: 40
+  difficultyLevel: 20
+  useRandomSeed: 0
+  boardSeed: 10
 --- !u!1001 &2970181756570453549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -718,30 +720,6 @@ PrefabInstance:
     - target: {fileID: 5376288642228989106, guid: 73ceb155747d7e54884a111405800317, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6361615859464154691, guid: 73ceb155747d7e54884a111405800317, type: 3}
-      propertyPath: m_Colors.m_NormalColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6361615859464154691, guid: 73ceb155747d7e54884a111405800317, type: 3}
-      propertyPath: m_Colors.m_NormalColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6361615859464154691, guid: 73ceb155747d7e54884a111405800317, type: 3}
-      propertyPath: m_Colors.m_NormalColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6361615859464154691, guid: 73ceb155747d7e54884a111405800317, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6361615859464154691, guid: 73ceb155747d7e54884a111405800317, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6361615859464154691, guid: 73ceb155747d7e54884a111405800317, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.r
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6949215561642962576, guid: 73ceb155747d7e54884a111405800317, type: 3}
       propertyPath: m_AnchorMax.y

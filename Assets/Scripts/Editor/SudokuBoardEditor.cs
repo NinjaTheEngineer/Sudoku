@@ -4,19 +4,35 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(SudokuBoard))]
-public class SudokuGridEditpr : Editor
+public class SudokuBoardEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        base.OnInspectorGUI();
+        serializedObject.Update();
 
-        SudokuBoard sudokuBoard = (SudokuBoard)target;
+        // Draw all properties except for 'useRandomSeed' and 'boardSeed'
+        SerializedProperty iterator = serializedObject.GetIterator();
+        bool enterChildren = true;
+        while (iterator.NextVisible(enterChildren))
+        {
+            if (iterator.name != "useRandomSeed" && iterator.name != "boardSeed")
+            {
+                EditorGUILayout.PropertyField(iterator, true);
+            }
+            enterChildren = false;
+        }
 
-        if (GUILayout.Button("Build Board")) {
-            sudokuBoard.StartBuildBoard();
+        // Draw 'useRandomSeed' property
+        SerializedProperty useRandomSeedProperty = serializedObject.FindProperty("useRandomSeed");
+        EditorGUILayout.PropertyField(useRandomSeedProperty);
+
+        // Draw 'boardSeed' property if 'useRandomSeed' is false
+        if (!useRandomSeedProperty.boolValue)
+        {
+            SerializedProperty boardSeedProperty = serializedObject.FindProperty("boardSeed");
+            EditorGUILayout.PropertyField(boardSeedProperty);
         }
-        if (GUILayout.Button("Clear Board")) {
-            sudokuBoard.ClearBoard();
-        }
+
+        serializedObject.ApplyModifiedProperties();
     }
 }

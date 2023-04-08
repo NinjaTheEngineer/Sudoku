@@ -6,19 +6,17 @@ public class Grid : NinjaMonoBehaviour {
     public int amountOfCells = 9;
     public Cell cellPrefab;
     [SerializeField]
-    private List<Cell> cells;
+    protected List<Cell> cells;
     public List<Cell> Cells => cells;
     private void Awake() {
         BuildGrid();
     }
     public void BuildGrid() {
         string logId = "BuildGrid";
-        int cellsCount = cells.Count;
-        if(cellsCount>0 && cells[0]!=null) {
+        if(amountOfCells==cells.Count && cells[0]!=null) {
             logd(logId, "Grid already instatianted => Clearing grid");
             ClearGrid();
         }
-        cells = new List<Cell>(amountOfCells);
         for (int y = 0; y < amountOfCells; y++) {
             Cell cell = Instantiate(cellPrefab, transform);
             cells.Add(cell);

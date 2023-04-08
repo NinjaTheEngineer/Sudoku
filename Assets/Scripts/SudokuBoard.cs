@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class SudokuBoard : NinjaMonoBehaviour {
     public static System.Action OnBoardInitialized;
-    public int numberOfGrids = 1;
-    public Grid gridPrefab;
-    public List<Grid> grids;
+    public int numberOfGrids = 9;
+    public SudokuGrid gridPrefab;
+    public List<SudokuGrid> grids;
     private List<SudokuCell> allCells;
     public DifficultyLevel difficultyLevel = DifficultyLevel.VeryEasy;
+    [SerializeField]
+    private bool useRandomSeed = false;
+    [SerializeField]
+    private int boardSeed = -1;
     public enum DifficultyLevel {
         VeryEasy = 20,
         Easy = 35,
@@ -18,6 +22,7 @@ public class SudokuBoard : NinjaMonoBehaviour {
     }
 
     private void Start() {
+        boardSeed = useRandomSeed?-1:boardSeed;
         StartBuildBoard();
     }
 
@@ -33,9 +38,9 @@ public class SudokuBoard : NinjaMonoBehaviour {
             ClearBoard();
         }
 
-        grids = new List<Grid>(numberOfGrids);
+        grids = new List<SudokuGrid>(numberOfGrids);
         for (int i = 0; i < numberOfGrids; i++) {
-            Grid grid = Instantiate(gridPrefab, transform);
+            SudokuGrid grid = Instantiate(gridPrefab, transform);
             grids.Add(grid);
         }
 
@@ -48,13 +53,44 @@ public class SudokuBoard : NinjaMonoBehaviour {
         }
 
         FillSudoku();
-        HideCells();
+        EmptySudokuCells();
         if(OnBoardInitialized!=null) {
             logd(logId, "Invoking OnBoardInitialized");
             OnBoardInitialized.Invoke();
         }
+        
+        HideGrids();
         watch.Stop();
+        yield return true;
+        yield return new WaitForSeconds(1f);
+        ShowGrids();
         logd(logId, "Execution time="+watch.ElapsedMilliseconds+"ms.");
+    }
+    private void HideGrids() {
+        string logId = "HideGrids";
+        if(numberOfGrids != grids.Count) {
+            logw(logId, "Not all grids were initialized => no-op");
+            return;
+        }
+        for (int i = 0; i < numberOfGrids; i++) {
+            SudokuGrid currentGrid = grids[i];
+            currentGrid.Deactivate();
+        }
+    }
+    private void ShowGrids() {
+        StartCoroutine(ShowGridsRoutine());
+    }
+    IEnumerator ShowGridsRoutine() {
+        string logId = "ShowGridsRoutine";
+        if(numberOfGrids != grids.Count) {
+            logw(logId, "Not all grids were initialized => no-op");
+            yield break;
+        }
+        Utils.Shuffle(grids);
+        for (int i = 0; i < numberOfGrids; i++) {
+            SudokuGrid currentGrid = grids[i];
+            currentGrid.Activate();
+        }
     }
     public bool FillSudoku(int cellIndex = 0) {
         var logId = "FillSudoku";
@@ -76,7 +112,7 @@ public class SudokuBoard : NinjaMonoBehaviour {
         for (int i = 1; i <= 9; i++) {
             availableNumbers.Add(i);
         }
-        
+
         foreach (SudokuCell cell in allCells) {
             if (cell == currentCell) {
                 continue;
@@ -92,7 +128,7 @@ public class SudokuBoard : NinjaMonoBehaviour {
             }
         }
 
-        Utils.Shuffle(availableNumbers);
+        Utils.Shuffle(availableNumbers, boardSeed);
 
         var availableNumbersCount = availableNumbers.Count;
         for (int i = 0; i < availableNumbersCount; i++) {
@@ -105,13 +141,10 @@ public class SudokuBoard : NinjaMonoBehaviour {
         }
         return false;
     }
-    private List<SudokuCell> _emptyCells;
-    public List<SudokuCell> EmptyCells => _emptyCells;
-    public void HideCells() {
-        var logId = "HideCells";
+    public void EmptySudokuCells() {
+        var logId = "EmptySudokuCells";
         var numToRemove = (int)difficultyLevel;
-        _emptyCells = new List<SudokuCell>(numToRemove);
-        Utils.Shuffle(allCells);
+        Utils.Shuffle(allCells, boardSeed);
         for (int i = 0; i < numToRemove; i++) {
             var currentCell = (SudokuCell)allCells[i];
             if(currentCell==null) {
@@ -119,7 +152,6 @@ public class SudokuBoard : NinjaMonoBehaviour {
                 return;
             }
             currentCell.HideNumber();
-            _emptyCells.Add(currentCell);
         }
         logd(logId, "Removed "+numToRemove+" cells from the board.");
     }
