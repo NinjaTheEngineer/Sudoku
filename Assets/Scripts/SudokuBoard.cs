@@ -6,24 +6,20 @@ public class SudokuBoard : NinjaMonoBehaviour {
     public static System.Action OnBoardInitialized;
     public int numberOfGrids = 9;
     public SudokuGrid gridPrefab;
+    public BoardInputController boardInputController;
     public List<SudokuGrid> grids;
     private List<SudokuCell> allCells;
-    public DifficultyLevel difficultyLevel = DifficultyLevel.VeryEasy;
     [SerializeField]
     private bool useRandomSeed = false;
     [SerializeField]
     private int boardSeed = -1;
-    public enum DifficultyLevel {
-        VeryEasy = 20,
-        Easy = 35,
-        Medium = 40,
-        Hard = 45,
-        Impossible = 60
+    public void OnBackButtonClick() {
+        SceneManager.LoadStartScene();
     }
-
     private void Start() {
         boardSeed = useRandomSeed?-1:boardSeed;
         StartBuildBoard();
+        boardInputController?.Initialize(this);
     }
 
     public void StartBuildBoard() {
@@ -35,6 +31,7 @@ public class SudokuBoard : NinjaMonoBehaviour {
         var watch = new System.Diagnostics.Stopwatch();
         watch.Start();
         if (grids?.Count>0 && grids[0]!=null) {
+            logd(logId, "Grids="+grids.logf()+" Count="+grids?.Count+" => Clearing Board");
             ClearBoard();
         }
 
@@ -59,14 +56,14 @@ public class SudokuBoard : NinjaMonoBehaviour {
             OnBoardInitialized.Invoke();
         }
         
-        HideGrids();
+        DeactivateCells();
         watch.Stop();
         yield return true;
         yield return new WaitForSeconds(1f);
-        ShowGrids();
+        ActivateCells();
         logd(logId, "Execution time="+watch.ElapsedMilliseconds+"ms.");
     }
-    private void HideGrids() {
+    private void DeactivateCells() {
         string logId = "HideGrids";
         if(numberOfGrids != grids.Count) {
             logw(logId, "Not all grids were initialized => no-op");
@@ -74,22 +71,21 @@ public class SudokuBoard : NinjaMonoBehaviour {
         }
         for (int i = 0; i < numberOfGrids; i++) {
             SudokuGrid currentGrid = grids[i];
-            currentGrid.Deactivate();
+            currentGrid.DeactivateCells();
         }
     }
-    private void ShowGrids() {
-        StartCoroutine(ShowGridsRoutine());
+    private void ActivateCells() {
+        StartCoroutine(ActivateCellsRoutine());
     }
-    IEnumerator ShowGridsRoutine() {
-        string logId = "ShowGridsRoutine";
+    IEnumerator ActivateCellsRoutine() {
+        string logId = "ActivateCellsRoutine";
         if(numberOfGrids != grids.Count) {
             logw(logId, "Not all grids were initialized => no-op");
             yield break;
         }
-        Utils.Shuffle(grids);
         for (int i = 0; i < numberOfGrids; i++) {
             SudokuGrid currentGrid = grids[i];
-            currentGrid.Activate();
+            currentGrid.ActivateCells();
         }
     }
     public bool FillSudoku(int cellIndex = 0) {
@@ -143,7 +139,7 @@ public class SudokuBoard : NinjaMonoBehaviour {
     }
     public void EmptySudokuCells() {
         var logId = "EmptySudokuCells";
-        var numToRemove = (int)difficultyLevel;
+        var numToRemove = PlayerPrefs.GetInt(PlayerPrefs.Key.Difficulty);
         Utils.Shuffle(allCells, boardSeed);
         for (int i = 0; i < numToRemove; i++) {
             var currentCell = (SudokuCell)allCells[i];
@@ -187,7 +183,7 @@ public class SudokuBoard : NinjaMonoBehaviour {
         string logId = "ClearBoard";
         int subGridsCount = grids.Count;
         if(subGridsCount<=0) {
-            logt(logId, "Board not initialized => no-op.");
+            logd(logId, "Board not initialized => no-op.");
             return;
         }
         for (int i = 0; i < subGridsCount; i++) {

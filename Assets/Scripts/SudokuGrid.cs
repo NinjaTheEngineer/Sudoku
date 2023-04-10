@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SudokuGrid : Grid {
-    public void Activate() {
+    public void ActivateCells() {
         gameObject.SetActive(true);
-        StartCoroutine(ActivateRoutine());
+        StartCoroutine(ActivateCellsRoutine());
     }
-    public void Deactivate() {
-        string logId = "DeactiveGrid";
+    public void DeactivateCells() {
+        string logId = "DeactivateCells";
         if(cells.Count != amountOfCells) {
             logw(logId, "Not all cells Initialized => no-op");
             return;
@@ -23,8 +23,8 @@ public class SudokuGrid : Grid {
         }
     }
 
-    IEnumerator ActivateRoutine() {
-        string logId = "ActivateGridRoutine";
+    IEnumerator ActivateCellsRoutine() {
+        string logId = "ActivateCellsRoutine";
         int cellsCount = cells.Count;
         Utils.Shuffle(cells);
         for (int i = 0; i < cellsCount; i++) {

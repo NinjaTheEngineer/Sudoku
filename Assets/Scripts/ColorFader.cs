@@ -40,7 +40,7 @@ public class ColorFader : NinjaMonoBehaviour {
     }
     IEnumerator FadeRoutine(Color startColor, Color endColor) {
         string logId = "FadeRoutine";
-        logd(logId, "Starting fading from "+startColor+" to "+endColor);
+        logt(logId, "Starting fading from "+startColor+" to "+endColor);
         while (true) {
             float t = 0f;
             while (t < fadeTime) {

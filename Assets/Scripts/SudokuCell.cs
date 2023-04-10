@@ -43,6 +43,7 @@ public class SudokuCell : Cell {
             if(value==_number) {
                 numberText.text = value.ToString();
                 Solved = true;
+                UpdateVisu();
                 logd(logId, "Correct value of "+value);
             } else {
                 numberText.text = value.ToString();

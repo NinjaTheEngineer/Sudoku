@@ -5,12 +5,19 @@ using UnityEngine;
 public class BoardInputController : NinjaMonoBehaviour {
     public SudokuBoard sudokuBoard;
     private SudokuCell selectedCell;
-    private void Awake() {
-        SudokuBoard.OnBoardInitialized -= RegisterSudokuCells;
+    public void Initialize(SudokuBoard sudokuBoard) {
+        string logId = "Initialize";
+        if(sudokuBoard==null) {
+            loge(logId, "SudokuBoard="+sudokuBoard.logf()+" => no-op");
+            return;
+        }
+        selectedCell = null;
+        this.sudokuBoard = sudokuBoard;
         SudokuBoard.OnBoardInitialized += RegisterSudokuCells;
     }
     private void RegisterSudokuCells() {
         string logId = "RegisterSudokuCells";
+        logd(logId, "Fetching cells from SudokuBoard="+sudokuBoard.logf());
         List<SudokuCell> sudokuCells = sudokuBoard.AllCells;
         var sudokuCellsCount = sudokuCells.Count;
         logd(logId,"Registering "+sudokuCellsCount+" Sudoku Cells");
@@ -44,5 +51,8 @@ public class BoardInputController : NinjaMonoBehaviour {
             return;
         }
         selectedCell.InputNumber = number;
+    }
+    private void OnDestroy() {
+        SudokuBoard.OnBoardInitialized -= RegisterSudokuCells;
     }
 }

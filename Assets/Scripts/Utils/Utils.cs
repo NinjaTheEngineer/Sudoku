@@ -19,4 +19,44 @@ public static class Utils {
             list[n] = value;
         }
     }
+    static Dictionary<string, string> lastIdMessage = new Dictionary<string, string>();
+    public static void logd(string id, string message, bool ignoreDuplicates=false) {
+        if(ignoreDuplicates && lastIdMessage.ContainsKey(id) && lastIdMessage[id]==message) {
+            return;
+        }
+        Debug.Log(id+"::"+message);
+        if(lastIdMessage.ContainsKey(id)) {
+            lastIdMessage[id] = message;
+        } else {
+            lastIdMessage.Add(id, message);
+        }
+    }
+    
+    public static void logw(string id, string message, bool ignoreDuplicates=false) {
+        if(ignoreDuplicates && lastIdMessage.ContainsKey(id) && lastIdMessage[id]==message) {
+            return;
+        }
+        Debug.LogWarning(id+"::"+message);
+        if(lastIdMessage.ContainsKey(id)) {
+            lastIdMessage[id] = message;
+        } else {
+            lastIdMessage.Add(id, message);
+        }
+    }
+    
+    public static void loge(string id=null, string message=null, bool ignoreDuplicates=false) {
+        if(ignoreDuplicates && lastIdMessage.ContainsKey(id) && lastIdMessage[id]==message) {
+            return;
+        }
+        Debug.LogError(id+"::"+ message);
+        if(lastIdMessage.ContainsKey(id)) {
+            lastIdMessage[id] = message;
+        } else {
+            lastIdMessage.Add(id, message);
+        }
+
+    }
+    public static void logt(string id=null, string message=null) {
+        return;
+    }
 }
