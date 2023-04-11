@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour {
         }
     }
     public void OnQuiButtonClick() {
+        AudioManager.Instance.PlayButtonClick();
         SceneManager.LoadStartScene();
     }
 }

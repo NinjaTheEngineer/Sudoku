@@ -9,6 +9,7 @@ public class DifficultyMenuController : MenuController {
     }
     public void OnDifficultyButtonClick(DifficultySelector difficultySelector) {
         string logId = "OnDifficultyButtonClick";
+        AudioManager.Instance.PlayButtonClick();
         logd(logId, "Setting difficulty to "+difficultySelector.difficulty.ToString()+" difficultySelector.difficulty="+(int)difficultySelector.difficulty);
         PlayerPrefs.SetInt(PlayerPrefs.Key.Difficulty, (int)difficultySelector.difficulty);
         SceneManager.ActivateScene(SceneManager.Scene.Sudoku_1);

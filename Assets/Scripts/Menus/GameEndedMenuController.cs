@@ -8,7 +8,6 @@ public class GameEndedMenuController : MenuController {
     public TextMeshProUGUI timeTakenText;
     public string solvedText = "Sudoku Solved";
     public string failedText = "Game Over";
-    private bool sudokuSolved = false;
     private void Start() {
         GameManager.Instance.OnSudokuSolved += SetSudokuSolvedUI;
         GameManager.Instance.OnSudokuFailed += SetSudokuFailedUI;
@@ -30,9 +29,15 @@ public class GameEndedMenuController : MenuController {
         timeTakenText.text = GameManager.Instance.TimeInGameText();
     }
     public void OnPlayAgainButtonClick() {
+        string logId = "OnPlayAgainButtonClick";
+        logd(logId, "ReloadScene");
+        AudioManager.Instance.PlayButtonClick();
         SceneManager.ReloadScene();
     }
     public void OnQuiButtonClick() {
+        string logId = "OnQuiButtonClick";
+        logd(logId, "LoadStartScene");
+        AudioManager.Instance.PlayButtonClick();
         SceneManager.LoadStartScene();
     }
     private void OnDestroy() {

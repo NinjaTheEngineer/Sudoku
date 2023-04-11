@@ -33,6 +33,7 @@ public class BoardInputController : NinjaMonoBehaviour {
             logw(logId, "Cell="+cell.logf()+" => no-op");
             return;
         }
+        AudioManager.Instance.PlaySudokuCellClickSound();
         if(selectedCell==cell && !cell.Solved) {
             logd(logId, "Tried to select same Cell="+cell.logf()+" => Clearing selection");
             selectedCell?.Deselect();
@@ -50,6 +51,7 @@ public class BoardInputController : NinjaMonoBehaviour {
             logw(logId, "SelectedCell="+selectedCell.logf()+" => no-op.");
             return;
         }
+        AudioManager.Instance.PlaySudokuCellClickSound();
         selectedCell.InputNumber = number;
     }
     private void OnDestroy() {

@@ -42,6 +42,7 @@ public class GameManager : NinjaMonoBehaviour {
     public void AddWrongGuess() {
         string logId = "AddWrongGuess";
         _wrongGuesses++;
+        AudioManager.Instance.PlayWrongGuessSound();
         OnWrongGuess?.Invoke();
         if(_wrongGuesses>=3) {
             logd(logId, "Game Over!");
@@ -61,10 +62,12 @@ public class GameManager : NinjaMonoBehaviour {
     }
     public void SudokuFailed() {
         _currentState = GameState.NotPlaying;
+        AudioManager.Instance.PlaySudokuFailedSound();
         OnSudokuFailed?.Invoke();
     }
     public void SudokuSolved() {
         _currentState = GameState.NotPlaying;
+        AudioManager.Instance.PlaySudokuSolvedSound();
         OnSudokuSolved?.Invoke();
     }
 }

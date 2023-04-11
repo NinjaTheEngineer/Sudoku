@@ -8,6 +8,7 @@ public class MainMenuController : MenuController {
         CurrentState = MenuState.Active;
     }
     public void OnStartButtonClick() {
+        AudioManager.Instance.PlayButtonClick();
         SceneManager.LoadSceneAsync(SceneManager.Scene.Sudoku_1);
         difficultyMenu.Activate(
             (t) => {
@@ -16,6 +17,7 @@ public class MainMenuController : MenuController {
         );
     }
     public void OnExitButtonClick() {
+        AudioManager.Instance.PlayButtonClick();
         Application.Quit();
     }
 }
