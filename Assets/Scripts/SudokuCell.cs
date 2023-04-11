@@ -3,15 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class SudokuCell : Cell {
     [SerializeField]
     private ButtonColorChanger buttonColorChanger;
     [SerializeField]
     private ColorFader colorFader;
+    [SerializeField]
+    private Color playedColor;
     public System.Action<SudokuCell> OnClicked;
+    public Action<SudokuCell> OnSolved;
+    public Action OnWrongGuess;
+    private bool _solved;
     public bool Solved {
-        get; private set;
+        get => _solved;
+        private set {
+            string logId = "Solved_set";
+            logd(logId, "Setting solved to "+value);
+            _solved = value;
+            if(_solved) {
+                logd(logId, "Invoking OnSolved");
+                OnSolved?.Invoke(this);
+            } else {
+                OnWrongGuess?.Invoke();
+            }
+            UpdateVisu();
+        }
     }
     public CellState CurrentState {
         get; private set;
@@ -47,13 +65,15 @@ public class SudokuCell : Cell {
                 logd(logId, "Correct value of "+value);
             } else {
                 numberText.text = value.ToString();
+                Solved = false;
                 logd(logId, "Wrong value of "+value);
             }
         }
     }
+
     private void Awake() {
         CurrentState = CellState.Inactive;
-        Solved = true;
+        _solved = true;
     }
     public void HideNumber() {
         string logId = "HideNumber";
@@ -61,7 +81,8 @@ public class SudokuCell : Cell {
             loge(logId, "NumberText is null => no-op.");
             return;
         }
-        Solved = false;
+        _solved = false;
+        numberText.color = playedColor;
         numberText.gameObject.SetActive(false);
     }
     public void OnClick() {
@@ -73,7 +94,7 @@ public class SudokuCell : Cell {
     public void Select() {
         if(CurrentState==CellState.Selected) {
             CurrentState = CellState.Active;
-        } else if(Solved) {
+        } else if(_solved) {
             CurrentState = CellState.Highlighted;
         } else {
             CurrentState = CellState.Selected;
@@ -85,6 +106,9 @@ public class SudokuCell : Cell {
         CurrentState = CellState.Active;
         UpdateVisu();
         colorFader.FadeIn();
+    }
+    public void AnimateSolved() {
+        colorFader.FadeColors(buttonColorChanger.SelectedColor, buttonColorChanger.NormalColor);
     }
     public void Deactivate() {
         CurrentState = CellState.Inactive;

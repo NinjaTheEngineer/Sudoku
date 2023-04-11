@@ -8,6 +8,7 @@ public class Grid : NinjaMonoBehaviour {
     [SerializeField]
     protected List<Cell> cells;
     public List<Cell> Cells => cells;
+
     private void Awake() {
         BuildGrid();
     }
@@ -22,7 +23,7 @@ public class Grid : NinjaMonoBehaviour {
             cells.Add(cell);
             cell.Grid = this;
         }
-        logt(logId, "All cells initialized");
+        logd(logId, "All cells initialized");
     }
     public void ClearGrid() {
         string logId = "ClearGrid";

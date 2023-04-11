@@ -19,6 +19,22 @@ public static class Utils {
             list[n] = value;
         }
     }
+    public static List<T> ShuffleAsNew<T>(List<T> list, int seed=-1) {
+        if(seed==-1) {
+            seed = Random.Range(0, 100000);
+        }
+        Random.InitState(seed);
+        int n = list.Count;
+        List<T> newList = list;
+        while (n > 1) {
+            n--;
+            int k = Random.Range(0, n + 1);
+            T value = newList[k];
+            newList[k] = newList[n];
+            newList[n] = value;
+        }
+        return newList;
+    }
     static Dictionary<string, string> lastIdMessage = new Dictionary<string, string>();
     public static void logd(string id, string message, bool ignoreDuplicates=false) {
         if(ignoreDuplicates && lastIdMessage.ContainsKey(id) && lastIdMessage[id]==message) {

@@ -33,7 +33,7 @@ public class BoardInputController : NinjaMonoBehaviour {
             logw(logId, "Cell="+cell.logf()+" => no-op");
             return;
         }
-        if(selectedCell==cell) {
+        if(selectedCell==cell && !cell.Solved) {
             logd(logId, "Tried to select same Cell="+cell.logf()+" => Clearing selection");
             selectedCell?.Deselect();
             selectedCell = null;

@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class ButtonColorChanger : ColorChanger {
     [SerializeField]
-    private Color selectedColor;
+    private Color _selectedColor;
+    public Color SelectedColor => _selectedColor;
     [SerializeField]
-    private Color highlightedColor;
+    private Color _highlightedColor;
+    public Color HighlightedColor => _highlightedColor;
     public void SetNormalColor() {
-        image.color = normalColor;
+        image.color = _normalColor;
     }
     public void SetSelectedColor() {
-        image.color = selectedColor;
+        image.color = _selectedColor;
     }
     public void SetHighlightedColor() {
-        image.color = highlightedColor;
+        image.color = _highlightedColor;
     }
 }

@@ -11,7 +11,6 @@ public class MainMenuController : MenuController {
         SceneManager.LoadSceneAsync(SceneManager.Scene.Sudoku_1);
         difficultyMenu.Activate(
             (t) => {
-                float smoothT = Mathf.SmoothStep(0, 1, t);
                 difficultyMenu.transform.localPosition = Vector3.Lerp(difficultyMenu.deactivatedPosition, difficultyMenu.activePosition, t);
             }
         );

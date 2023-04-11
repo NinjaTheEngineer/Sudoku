@@ -13,9 +13,6 @@ public class SudokuBoard : NinjaMonoBehaviour {
     private bool useRandomSeed = false;
     [SerializeField]
     private int boardSeed = -1;
-    public void OnBackButtonClick() {
-        SceneManager.LoadStartScene();
-    }
     private void Start() {
         boardSeed = useRandomSeed?-1:boardSeed;
         StartBuildBoard();
@@ -44,7 +41,8 @@ public class SudokuBoard : NinjaMonoBehaviour {
         yield return true;
 
         allCells = AllCells;
-        if (allCells?.Count==0) {
+        int allCellsCount = allCells==null?0:allCells.Count;
+        if (allCellsCount==0) {
             loge(logId, "Couldn't resolve AllCells");
             yield break;
         }
@@ -59,8 +57,9 @@ public class SudokuBoard : NinjaMonoBehaviour {
         DeactivateCells();
         watch.Stop();
         yield return true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.75f);
         ActivateCells();
+        GameManager.Instance.OnGameStart();
         logd(logId, "Execution time="+watch.ElapsedMilliseconds+"ms.");
     }
     private void DeactivateCells() {
@@ -92,15 +91,16 @@ public class SudokuBoard : NinjaMonoBehaviour {
         var logId = "FillSudoku";
         if (cellIndex >= allCells.Count) {
             logt(logId, "All cells filled successfully => returning true");
-            // We have filled all cells successfully
             return true;
         }
 
         var currentCell = allCells[cellIndex];
-
+        if(currentCell==null) {
+            loge(logId, "CurrentCell="+currentCell.logf()+" => no-op");
+            return false;
+        }
         if (currentCell.Number!=0) {
             logt(logId, "CurrentCell="+currentCell+" already filled => Moving to next one");
-            // Cell is already filled, move on to the next one
             return FillSudoku(cellIndex + 1);
         }
 
@@ -110,7 +110,8 @@ public class SudokuBoard : NinjaMonoBehaviour {
         }
 
         foreach (SudokuCell cell in allCells) {
-            if (cell == currentCell) {
+            if (cell==null || cell==currentCell) {
+                logt(logId, "Cell="+cell.logf()+" CurrentCell="+currentCell.logf());
                 continue;
             }
             bool cellsInSameColumn = cell.transform.position.x == currentCell.transform.position.x;
@@ -137,19 +138,44 @@ public class SudokuBoard : NinjaMonoBehaviour {
         }
         return false;
     }
+    private int cellsToSolve;
     public void EmptySudokuCells() {
         var logId = "EmptySudokuCells";
-        var numToRemove = PlayerPrefs.GetInt(PlayerPrefs.Key.Difficulty);
+        cellsToSolve = PlayerPrefs.GetInt(PlayerPrefs.Key.Difficulty);
         Utils.Shuffle(allCells, boardSeed);
-        for (int i = 0; i < numToRemove; i++) {
+        for (int i = 0; i < cellsToSolve; i++) {
             var currentCell = (SudokuCell)allCells[i];
             if(currentCell==null) {
                 logw(logId, "CurrentCell="+currentCell.logf()+" => is not a SudokuCell.");
                 return;
             }
             currentCell.HideNumber();
+            currentCell.OnSolved -= CellSolved;
+            currentCell.OnSolved += CellSolved;
+            currentCell.OnWrongGuess -= GameManager.Instance.AddWrongGuess;
+            currentCell.OnWrongGuess += GameManager.Instance.AddWrongGuess;
         }
-        logd(logId, "Removed "+numToRemove+" cells from the board.");
+        logd(logId, "Removed "+cellsToSolve+" cells from the board.");
+    }
+    private void CellSolved(SudokuCell cell) {
+        string logId = "CellSolved";
+        if(cell==null) {
+            logw(logId, "Cell="+cell.logf()+" => no-op");
+            return;
+        }
+        cellsToSolve--;
+        if(cellsToSolve==0) {
+            logd(logId, "GameManager => SudokuSolved!");
+            GameManager.Instance.SudokuSolved();
+            return;
+        }
+        
+        SudokuGrid cellGrid = (SudokuGrid)cell.Grid;
+        if(cellGrid==null) {
+            logw(logId, "CellGrid is not SudokuGrid => no-op");
+            return;
+        }
+        cellGrid.CellSolved();
     }
     public List<SudokuCell> AllCells {
         get {

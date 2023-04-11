@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,10 +15,11 @@ public static class SceneManager {
     private static Scene _lastScene = Scene.MainMenu;
     public static Scene LastScene => _lastScene;
     public static void LoadScene(Scene scene) {
-        sm.SceneManager.LoadScene((int)scene);
+        SceneTransition.Instance.FadeOut(() => sm.SceneManager.LoadScene((int)scene));
     }
 
     public static void LoadStartScene() {
+        GameManager.Instance.ResetValues();
         LoadScene(startScene);
         _lastScene = startScene;
     }
@@ -48,8 +50,12 @@ public static class SceneManager {
             return;
         }
         Utils.logd(logId, "Activating Scene="+scene);
-        asyncOperation.allowSceneActivation = true;
-        sm.SceneManager.sceneLoaded += OnSceneLoaded;
+        var sceneTransition = SceneTransition.Instance;
+        Utils.logd(logId, "SceneTransition="+sceneTransition.logf());
+        SceneTransition.Instance.FadeOut(() => {
+            asyncOperation.allowSceneActivation = true;
+            sm.SceneManager.sceneLoaded += OnSceneLoaded;
+        });
     }
 
     private static void OnSceneLoaded(sm.Scene scene, sm.LoadSceneMode mode) {
@@ -61,5 +67,9 @@ public static class SceneManager {
         _lastScene = lastLoadedScene;
         lastLoadedScene = scene==null?Scene.MainMenu:(Scene)scene.buildIndex;
         sm.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    public static void ReloadScene() {
+        LoadScene(lastLoadedScene);
     }
 }

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
 public class ColorChanger : NinjaMonoBehaviour {
-    protected Color normalColor;
+    protected Color _normalColor;
+    public Color NormalColor => _normalColor;
     [SerializeField]
     protected Image image;
     private void Awake() {
@@ -14,6 +15,6 @@ public class ColorChanger : NinjaMonoBehaviour {
             loge(logId, "Image component not found on this GameObject!");
             image = GetComponent<Image>();
         }
-        normalColor = image.color;
+        _normalColor = image.color;
     }
 }
