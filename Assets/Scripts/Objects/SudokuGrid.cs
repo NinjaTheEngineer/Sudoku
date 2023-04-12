@@ -19,7 +19,7 @@ public class SudokuGrid : Grid {
                     unsolvedCells++;
                 }
             }
-            logd(logId, "UnsolvedCells="+unsolvedCells);
+            logt(logId, "UnsolvedCells="+unsolvedCells);
             return unsolvedCells==0;
         }
      }
@@ -44,21 +44,18 @@ public class SudokuGrid : Grid {
         }
     }
 
-    public void CellSolved() {
-        string logId = "CellSolved";
-        if(Solved) {
-            logd(logId, "Solved => Animating cells");
-            StartCoroutine(AnimateSolvedGridRoutine());
-        } else {
-            logd(logId, "Not Solved");
-        }
+    public void StartSolvedGridAnimation(bool randomizeCells = false) {
+        string logId = "StartSolvedGridAnimation";
+        logt(logId, "Starting AnimateSolvedGridRoutine");
+        StartCoroutine(AnimateSolvedGridRoutine(randomizeCells));
     }
-    IEnumerator AnimateSolvedGridRoutine() {
+    IEnumerator AnimateSolvedGridRoutine(bool randomizeCells = false) {
         string logId = "AnimateSolvedGridRoutine";
         int cellsCount = cells.Count;
+        var listOfCells = randomizeCells?Utils.ShuffleAsNew(cells):cells;
         var waitForSeconds = new WaitForSeconds(cellAnimationDelay);
         for (int i = 0; i < cellsCount; i++) {
-            SudokuCell currentCell = (SudokuCell)cells[i];
+            SudokuCell currentCell = (SudokuCell)listOfCells[i];
             if(currentCell==null) {
                 logw(logId, "CurrentCell="+currentCell.logf()+" is not SudokuCell => continuing");
                 continue;

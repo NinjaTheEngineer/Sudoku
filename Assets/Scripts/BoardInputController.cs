@@ -17,10 +17,10 @@ public class BoardInputController : NinjaMonoBehaviour {
     }
     private void RegisterSudokuCells() {
         string logId = "RegisterSudokuCells";
-        logd(logId, "Fetching cells from SudokuBoard="+sudokuBoard.logf());
+        logt(logId, "Fetching cells from SudokuBoard="+sudokuBoard.logf());
         List<SudokuCell> sudokuCells = sudokuBoard.AllCells;
         var sudokuCellsCount = sudokuCells.Count;
-        logd(logId,"Registering "+sudokuCellsCount+" Sudoku Cells");
+        logt(logId,"Registering "+sudokuCellsCount+" Sudoku Cells");
         for (int i = 0; i < sudokuCellsCount; i++) {
             var currentCell = sudokuCells[i];
             currentCell.OnClicked -= SelectCell;
@@ -35,11 +35,11 @@ public class BoardInputController : NinjaMonoBehaviour {
         }
         AudioManager.Instance.PlaySudokuCellClickSound();
         if(selectedCell==cell && !cell.Solved) {
-            logd(logId, "Tried to select same Cell="+cell.logf()+" => Clearing selection");
+            logt(logId, "Tried to select same Cell="+cell.logf()+" => Clearing selection");
             selectedCell?.Deselect();
             selectedCell = null;
         } else {
-            logd(logId, "Selected Cell="+cell.logf());
+            logt(logId, "Selected Cell="+cell.logf());
             selectedCell?.Deselect();
             selectedCell = cell;
             selectedCell.Select();

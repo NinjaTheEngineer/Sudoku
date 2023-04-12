@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour {
         while(true) {
             if(gameManager.CurrentState==GameManager.GameState.Playing) {
                 var timeInGame = gameManager.TimeInGameText();
+                timeInGameText.text = timeInGame;
             }
             yield return waitForSeconds;
         }

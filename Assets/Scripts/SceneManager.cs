@@ -26,12 +26,12 @@ public static class SceneManager {
 
     public static void UnloadScene(Scene scene) {
         string logId = "SceneManager::UnloadScene";
-        Utils.logd(logId, "Unloading Scene="+scene);
+        Utils.logt(logId, "Unloading Scene="+scene);
         asyncOperation = sm.SceneManager.UnloadSceneAsync((int)scene, sm.UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
     }
     public static void UnloadLastScene() {
         string logId = "SceneManager::UnloadLastScene";
-        Utils.logd(logId, "Unloading Scene="+_lastScene);
+        Utils.logt(logId, "Unloading Scene="+_lastScene);
         asyncOperation = sm.SceneManager.UnloadSceneAsync((int)_lastScene, sm.UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
     }
 
@@ -49,9 +49,9 @@ public static class SceneManager {
             Utils.logw(logId, "AsyncOperation="+asyncOperation.logf()+" AsyncOperationIsDone="+asyncOperationIsDone+" Scene="+scene.logf()+" AsyncLoadedScene="+lastLoadedScene.logf()+" => no-op");
             return;
         }
-        Utils.logd(logId, "Activating Scene="+scene);
+        Utils.logt(logId, "Activating Scene="+scene);
         var sceneTransition = SceneTransition.Instance;
-        Utils.logd(logId, "SceneTransition="+sceneTransition.logf());
+        Utils.logt(logId, "SceneTransition="+sceneTransition.logf());
         SceneTransition.Instance.FadeOut(() => {
             asyncOperation.allowSceneActivation = true;
             sm.SceneManager.sceneLoaded += OnSceneLoaded;
@@ -60,10 +60,10 @@ public static class SceneManager {
 
     private static void OnSceneLoaded(sm.Scene scene, sm.LoadSceneMode mode) {
         string logId = "SceneManager::OnSceneLoaded";
-        Utils.logd(logId, "Scene="+scene.logf()+" Mode="+mode.logf());
+        Utils.logt(logId, "Scene="+scene.logf()+" Mode="+mode.logf());
         sm.SceneManager.SetActiveScene(scene);
         UnloadLastScene();
-        Utils.logd(logId, "LastScene="+_lastScene.logf()+" LastLoadedScene="+lastLoadedScene.logf());
+        Utils.logt(logId, "LastScene="+_lastScene.logf()+" LastLoadedScene="+lastLoadedScene.logf());
         _lastScene = lastLoadedScene;
         lastLoadedScene = scene==null?Scene.MainMenu:(Scene)scene.buildIndex;
         sm.SceneManager.sceneLoaded -= OnSceneLoaded;

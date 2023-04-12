@@ -23,7 +23,7 @@ public class MenuController : NinjaMonoBehaviour {
         string logId = "Activate";
         gameObject.SetActive(true);
         if(activateAnimation==null) {
-            logd(logId, "No animation for activating Menu="+name+" => Setting currentState to active");
+            logt(logId, "No animation for activating Menu="+name+" => Setting currentState to active");
             CurrentState = MenuState.Active;
         } else {
             CurrentState = MenuState.Activating;
@@ -34,7 +34,7 @@ public class MenuController : NinjaMonoBehaviour {
     public virtual void Deactivate(Action<float> deactivateAnimation = null) {
         string logId = "Deactivate";
         if(deactivateAnimation==null) {
-            logd(logId, "No animation for deactivating Menu="+name+" => Setting currentState to deactivated");
+            logt(logId, "No animation for deactivating Menu="+name+" => Setting currentState to deactivated");
             CurrentState = MenuState.Deactivated;
             gameObject.SetActive(false);
         } else {

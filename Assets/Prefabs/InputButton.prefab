@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 119365098751995600}
   - component: {fileID: 308315971202449405}
   - component: {fileID: 7452643174888753408}
-  - component: {fileID: 3326713769580117353}
   - component: {fileID: 4497199119723588449}
   m_Layer: 5
   m_Name: InputButton
@@ -214,18 +213,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3326713769580117353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6762025486547832222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dc3177d1e3f0da4a97354379030ff7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4497199119723588449
 MonoBehaviour:
   m_ObjectHideFlags: 0

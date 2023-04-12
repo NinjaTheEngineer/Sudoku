@@ -15,7 +15,7 @@ public class Grid : NinjaMonoBehaviour {
     public void BuildGrid() {
         string logId = "BuildGrid";
         if(amountOfCells==cells.Count && cells[0]!=null) {
-            logd(logId, "Grid already instatianted => Clearing grid");
+            logt(logId, "Grid already instatianted => Clearing grid");
             ClearGrid();
         }
         for (int y = 0; y < amountOfCells; y++) {
@@ -23,13 +23,13 @@ public class Grid : NinjaMonoBehaviour {
             cells.Add(cell);
             cell.Grid = this;
         }
-        logd(logId, "All cells initialized");
+        logt(logId, "All cells initialized");
     }
     public void ClearGrid() {
         string logId = "ClearGrid";
         int cellsCount = cells.Count;
         if(cellsCount<=0) {
-            logd(logId, "Grid not initialized => Destroying self.");
+            logt(logId, "Grid not initialized => Destroying self.");
             DestroyImmediate(gameObject);
             return;
         }

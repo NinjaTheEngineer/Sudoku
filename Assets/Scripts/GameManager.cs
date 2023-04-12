@@ -27,6 +27,7 @@ public class GameManager : NinjaMonoBehaviour {
         } else {
             Destroy(gameObject);
         }
+        Utils.InitRandom();
     }
     public void OnGameStart() {
         startTime = Time.time;
@@ -45,10 +46,9 @@ public class GameManager : NinjaMonoBehaviour {
         AudioManager.Instance.PlayWrongGuessSound();
         OnWrongGuess?.Invoke();
         if(_wrongGuesses>=3) {
-            logd(logId, "Game Over!");
+            logt(logId, "Game Over!");
             SudokuFailed();
         }
-        //Maybe shake screen?
     }
     private void Update() {
         if(_currentState==GameState.Playing) {

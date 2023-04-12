@@ -287,7 +287,8 @@ MonoBehaviour:
   Grid: {fileID: 0}
   buttonColorChanger: {fileID: 3734479634839849012}
   colorFader: {fileID: 7322394709573949580}
-  playedColor: {r: 0.48235297, g: 0.5372549, b: 0.50980395, a: 1}
+  solvedColor: {r: 0.5019608, g: 0.56078434, b: 0.5294118, a: 1}
+  wrongGuessColor: {r: 0.8962264, g: 0.38195345, b: 0.16487186, a: 1}
   numberText: {fileID: 1880177950348570301}
 --- !u!114 &3734479634839849012
 MonoBehaviour:
@@ -302,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 4878077516933275993}
-  _selectedColor: {r: 1, g: 0.49411765, b: 0.27450982, a: 1}
+  _selectedColor: {r: 0.9411765, g: 0.7058824, b: 0.39215687, a: 1}
   _highlightedColor: {r: 0.6862745, g: 0.8156863, b: 0.7490196, a: 1}
 --- !u!114 &7322394709573949580
 MonoBehaviour:
@@ -316,5 +317,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa73d39637f72547aceb246feb2cb48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultFadeTime: 1
+  defaultFadeTime: 0.33
   image: {fileID: 4878077516933275993}

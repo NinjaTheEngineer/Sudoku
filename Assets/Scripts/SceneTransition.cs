@@ -17,7 +17,7 @@ public class SceneTransition : NinjaMonoBehaviour {
 
     private IEnumerator FadeInRoutine() {
         string logId = "FadeInRoutine";
-        logd(logId, "Starting FadeInRoutine");
+        logt(logId, "Starting FadeInRoutine");
         Color color = fadeImage.color;
         float alpha = 1.0f;
 
@@ -27,14 +27,14 @@ public class SceneTransition : NinjaMonoBehaviour {
             fadeImage.color = color;
             yield return null;
         }
-        logd(logId, "FadeInRoutine Ended");
+        logt(logId, "FadeInRoutine Ended");
     }
     public void FadeOut(System.Action callback=null) {
         StartCoroutine(FadeOutRoutine(callback));
     }
     public IEnumerator FadeOutRoutine(System.Action callback=null) {
         string logId = "FadeOutRoutine";
-        logd(logId, "Starting FadeOutRoutine");
+        logt(logId, "Starting FadeOutRoutine");
         Color color = fadeImage.color;
         float alpha = 0.0f;
         while (alpha < 1.0f) {
@@ -43,7 +43,7 @@ public class SceneTransition : NinjaMonoBehaviour {
             fadeImage.color = color;
             yield return null;
         }
-        logd(logId, "FadeOutRoutine Ended");
+        logt(logId, "FadeOutRoutine Ended");
         callback?.Invoke();
     }
 }

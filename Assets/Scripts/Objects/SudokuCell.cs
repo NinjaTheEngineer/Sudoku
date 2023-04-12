@@ -11,7 +11,9 @@ public class SudokuCell : Cell {
     [SerializeField]
     private ColorFader colorFader;
     [SerializeField]
-    private Color playedColor;
+    private Color solvedColor;
+    [SerializeField]
+    private Color wrongGuessColor;
     public System.Action<SudokuCell> OnClicked;
     public Action<SudokuCell> OnSolved;
     public Action OnWrongGuess;
@@ -20,12 +22,14 @@ public class SudokuCell : Cell {
         get => _solved;
         private set {
             string logId = "Solved_set";
-            logd(logId, "Setting solved to "+value);
+            logt(logId, "Setting solved to "+value);
             _solved = value;
             if(_solved) {
-                logd(logId, "Invoking OnSolved");
+                logt(logId, "Invoking OnSolved");
+                numberText.color = solvedColor;
                 OnSolved?.Invoke(this);
             } else {
+                numberText.color = wrongGuessColor;
                 OnWrongGuess?.Invoke();
             }
             UpdateVisu();
@@ -62,11 +66,12 @@ public class SudokuCell : Cell {
                 numberText.text = value.ToString();
                 Solved = true;
                 UpdateVisu();
-                logd(logId, "Correct value of "+value);
+                logt(logId, "Correct value of "+value);
             } else {
                 numberText.text = value.ToString();
                 Solved = false;
-                logd(logId, "Wrong value of "+value);
+                UpdateVisu();
+                logt(logId, "Wrong value of "+value);
             }
         }
     }
@@ -82,7 +87,6 @@ public class SudokuCell : Cell {
             return;
         }
         _solved = false;
-        numberText.color = playedColor;
         numberText.gameObject.SetActive(false);
     }
     public void OnClick() {

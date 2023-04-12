@@ -16,27 +16,27 @@ public class GameEndedMenuController : MenuController {
 
     public void SetSudokuSolvedUI() {
         string logId = "SetSudokuSolvedUI";
-        logd(logId, "Setting Sudoku Solved UI");
+        logt(logId, "Setting Sudoku Solved UI");
         Activate((t) => { transform.localPosition = Vector3.Lerp(deactivatedPosition, activePosition, t); });
         endText.text = solvedText;
         timeTakenText.text = GameManager.Instance.TimeInGameText();
     }
     public void SetSudokuFailedUI() {
         string logId = "SetSudokuFailedUI";
-        logd(logId, "Setting Sudoku Failed UI");
+        logt(logId, "Setting Sudoku Failed UI");
         Activate((t) => { transform.localPosition = Vector3.Lerp(deactivatedPosition, activePosition, t); });
         endText.text = failedText;
         timeTakenText.text = GameManager.Instance.TimeInGameText();
     }
     public void OnPlayAgainButtonClick() {
         string logId = "OnPlayAgainButtonClick";
-        logd(logId, "ReloadScene");
+        logt(logId, "ReloadScene");
         AudioManager.Instance.PlayButtonClick();
         SceneManager.ReloadScene();
     }
     public void OnQuiButtonClick() {
         string logId = "OnQuiButtonClick";
-        logd(logId, "LoadStartScene");
+        logt(logId, "LoadStartScene");
         AudioManager.Instance.PlayButtonClick();
         SceneManager.LoadStartScene();
     }

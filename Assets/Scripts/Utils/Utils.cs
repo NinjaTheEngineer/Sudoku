@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class Utils {
-    public static System.Random UtilsRandom = new System.Random();
     public static string logf(this object o) => o == null ? "NULL" : o.ToString();
+    public static void InitRandom() {
+        Random.InitState(Mathf.FloorToInt(Time.time));
+    }
     public static void Shuffle<T>(List<T> list, int seed=-1) {
-        if(seed==-1) {
-            seed = Random.Range(0, 100000);
+        if(seed>=0) {
+            Random.InitState(seed);
         }
-        Random.InitState(seed);
         int n = list.Count;
         while (n > 1) {
             n--;
@@ -20,12 +21,14 @@ public static class Utils {
         }
     }
     public static List<T> ShuffleAsNew<T>(List<T> list, int seed=-1) {
-        if(seed==-1) {
-            seed = Random.Range(0, 100000);
+        if(seed>=0) {
+            Random.InitState(seed);
         }
-        Random.InitState(seed);
-        int n = list.Count;
-        List<T> newList = list;
+        int n = list==null?0:list.Count;
+        List<T> newList = new List<T>();
+        for (int i = 0; i < n; i++) {
+            newList.Add(list[i]);
+        }
         while (n > 1) {
             n--;
             int k = Random.Range(0, n + 1);
@@ -34,6 +37,12 @@ public static class Utils {
             newList[n] = value;
         }
         return newList;
+    }
+    public static string ListToString<T>(this List<T> list) {
+        if(list == null) {
+            return "";
+        }
+        return "["+string.Join(",",list)+"]";
     }
     static Dictionary<string, string> lastIdMessage = new Dictionary<string, string>();
     public static void logd(string id, string message, bool ignoreDuplicates=false) {

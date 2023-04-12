@@ -8,7 +8,7 @@ public static class PlayerPrefs {
     }
     public static void SetFloat(Key key, float value) {
         string logId = "PlayerPrefs::SetFloat";
-        Utils.logd(logId, "Setting "+key+" to "+value);
+        Utils.logt(logId, "Setting "+key+" to "+value);
         UnityEngine.PlayerPrefs.SetFloat(key.ToString(), value);
     }
     public static float GetFloat(Key key) {
@@ -16,7 +16,7 @@ public static class PlayerPrefs {
     }
     public static void SetInt(Key key, int value) {
         string logId = "PlayerPrefs::SetInt";
-        Utils.logd(logId, "Setting "+key+" to "+value);
+        Utils.logt(logId, "Setting "+key+" to "+value);
         UnityEngine.PlayerPrefs.SetInt(key.ToString(), value);
     }
     public static int GetInt(Key key) {
@@ -28,7 +28,7 @@ public static class PlayerPrefs {
             Utils.logw(logId, "Value="+value.logf()+" => no-op");
             return;
         }
-        Utils.logd(logId, "Setting "+key+" to "+value);
+        Utils.logt(logId, "Setting "+key+" to "+value);
         UnityEngine.PlayerPrefs.SetString(key.ToString(), value);
     }
     public static string GetString(Key key) {
@@ -36,7 +36,7 @@ public static class PlayerPrefs {
     }
     public static void DeleteKey(Key key) {
         string logId = "PlayerPrefs::DeleteKey";
-        Utils.logd(logId, "Deleting Key="+key);
+        Utils.logt(logId, "Deleting Key="+key);
         UnityEngine.PlayerPrefs.DeleteKey(key.ToString());
     }
 }

@@ -10,12 +10,12 @@ public class ButtonColorChanger : ColorChanger {
     private Color _highlightedColor;
     public Color HighlightedColor => _highlightedColor;
     public void SetNormalColor() {
-        image.color = _normalColor;
+        SetColor(NormalColor);
     }
     public void SetSelectedColor() {
-        image.color = _selectedColor;
+        SetColor(SelectedColor);
     }
     public void SetHighlightedColor() {
-        image.color = _highlightedColor;
+        SetColor(HighlightedColor);
     }
 }

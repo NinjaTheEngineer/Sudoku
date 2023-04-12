@@ -217,6 +217,7 @@ MonoBehaviour:
   activePosition: {x: 0, y: 0, z: 0}
   deactivatedPosition: {x: 0, y: -2000, z: 0}
   animationTime: 0.5
+  difficultyButtonsParent: {fileID: 213859278}
 --- !u!1 &147165101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1601,7 +1602,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 326}
-  m_SizeDelta: {x: 500, y: 120}
+  m_SizeDelta: {x: 611.9, y: 146.856}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1134043518
 MonoBehaviour:
@@ -1650,8 +1651,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 112
-  m_fontSizeBase: 112
+  m_fontSize: 132
+  m_fontSizeBase: 132
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1725,7 +1726,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1143716445}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1735,8 +1736,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 321}
-  m_SizeDelta: {x: 700, y: 600}
+  m_AnchoredPosition: {x: 0, y: 320.99994}
+  m_SizeDelta: {x: 811.36, y: 695.4546}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1143716447
 MonoBehaviour:
@@ -1811,8 +1812,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 6.3999}
+  m_SizeDelta: {x: 0, y: -12.7999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1198747117
 MonoBehaviour:
@@ -1861,15 +1862,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 72
+  m_fontSize: 84
+  m_fontSizeBase: 84
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2501,7 +2502,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -181}
-  m_SizeDelta: {x: 300, y: 100}
+  m_SizeDelta: {x: 382.7622, y: 127.5874}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1682784753
 MonoBehaviour:
@@ -2551,6 +2552,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
         m_MethodName: OnStartButtonClick
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1682784753}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

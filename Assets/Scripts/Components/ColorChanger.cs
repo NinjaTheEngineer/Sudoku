@@ -17,4 +17,12 @@ public class ColorChanger : NinjaMonoBehaviour {
         }
         _normalColor = image.color;
     }
+    public void SetColor(Color color) {
+        string logId = "SetColor";
+        if(image==null) {
+            logw(logId, "Image="+image.logf()+" => no-op");
+            return;
+        }
+        image.color = color;
+    }
 }
