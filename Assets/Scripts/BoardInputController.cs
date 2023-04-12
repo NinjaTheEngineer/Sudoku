@@ -58,7 +58,7 @@ public class BoardInputController : NinjaMonoBehaviour {
         }
         for (int i = 0; i < cellsCount; i++) {
             var currentCell = sudokuCells[i];
-            if(currentCell.Solved && currentCell.Number==cell.Number) {
+            if(currentCell!=cell && currentCell.Solved && currentCell.Number==cell.Number) {
                 currentCell.Highlight();
             }
         }

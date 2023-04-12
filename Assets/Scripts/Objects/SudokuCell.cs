@@ -143,6 +143,9 @@ public class SudokuCell : Cell {
     IEnumerator HighlightRoutine() {
         colorFader.FadeColors(buttonColorChanger.NormalColor, buttonColorChanger.HighlightedColor, highlightTime);
         yield return new WaitForSeconds(highlightTime);
+        CurrentState=CellState.Highlighted;
         colorFader.FadeColors(buttonColorChanger.HighlightedColor, buttonColorChanger.NormalColor, highlightTime);
+        yield return new WaitForSeconds(highlightTime);
+        CurrentState=CellState.Active;
     }
 }
