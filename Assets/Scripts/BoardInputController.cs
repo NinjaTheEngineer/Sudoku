@@ -5,6 +5,7 @@ using UnityEngine;
 public class BoardInputController : NinjaMonoBehaviour {
     public SudokuBoard sudokuBoard;
     private SudokuCell selectedCell;
+    private List<SudokuCell> sudokuCells;
     public void Initialize(SudokuBoard sudokuBoard) {
         string logId = "Initialize";
         if(sudokuBoard==null) {
@@ -18,7 +19,7 @@ public class BoardInputController : NinjaMonoBehaviour {
     private void RegisterSudokuCells() {
         string logId = "RegisterSudokuCells";
         logt(logId, "Fetching cells from SudokuBoard="+sudokuBoard.logf());
-        List<SudokuCell> sudokuCells = sudokuBoard.AllCells;
+        sudokuCells = sudokuBoard.AllCells;
         var sudokuCellsCount = sudokuCells.Count;
         logt(logId,"Registering "+sudokuCellsCount+" Sudoku Cells");
         for (int i = 0; i < sudokuCellsCount; i++) {
@@ -43,6 +44,23 @@ public class BoardInputController : NinjaMonoBehaviour {
             selectedCell?.Deselect();
             selectedCell = cell;
             selectedCell.Select();
+            if(selectedCell.Solved) {
+                HighlightSameValueCells(selectedCell);
+            }
+        }
+    }
+    public void HighlightSameValueCells(SudokuCell cell) {
+        string logId = "HighlightSameValueCells";
+        int cellsCount = sudokuCells.Count;
+        if(cellsCount<=0) {
+            logw(logId, "CellsCount="+cellsCount+" => no-op");
+            return;
+        }
+        for (int i = 0; i < cellsCount; i++) {
+            var currentCell = sudokuCells[i];
+            if(currentCell.Solved && currentCell.Number==cell.Number) {
+                currentCell.Highlight();
+            }
         }
     }
     public void OnInputButtonClick(int number) {

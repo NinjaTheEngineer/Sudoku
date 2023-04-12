@@ -16,6 +16,7 @@ public class SudokuCell : Cell {
     private Color wrongGuessColor;
     public System.Action<SudokuCell> OnClicked;
     public Action<SudokuCell> OnSolved;
+    public float highlightTime = 0.35f;
     public Action OnWrongGuess;
     private bool _solved;
     public bool Solved {
@@ -135,4 +136,13 @@ public class SudokuCell : Cell {
     }
     
     public override string ToString() => "Column="+transform.position.x+" Row="+transform.position.y+" CorrectNumber="+_number+" InputNumber="+_inputNumber+" Solved="+Solved;
+
+    public void Highlight() {
+        StartCoroutine(HighlightRoutine());
+    }
+    IEnumerator HighlightRoutine() {
+        colorFader.FadeColors(buttonColorChanger.NormalColor, buttonColorChanger.HighlightedColor, highlightTime);
+        yield return new WaitForSeconds(highlightTime);
+        colorFader.FadeColors(buttonColorChanger.HighlightedColor, buttonColorChanger.NormalColor, highlightTime);
+    }
 }
